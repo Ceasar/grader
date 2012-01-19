@@ -16,7 +16,7 @@ class Problem(object):
 
   @property
   def results(self):
-    for test_name, weight in self.weights.items():
+    for test_name, weight in self.weights.iteritems():
       test = self._get_test_from_test_name(test_name)
       result = unittest.TestResult()
       test.run(result)
