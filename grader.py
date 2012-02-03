@@ -1,4 +1,3 @@
-import sys
 import unittest
 
 
@@ -8,7 +7,8 @@ class Problem(object):
     assert all(test_name in test_case.__dict__ for test_name in weights)
     assert all(weight > 0 for weight in weights.values())
     self._test_case = test_case
-    self.weights = weights #test_name -> weight map
+    self.weights = weights  # test_name -> weight map
+    self._results = []
 
   @property
   def max_grade(self):
@@ -16,11 +16,15 @@ class Problem(object):
 
   @property
   def results(self):
-    for test_name, weight in self.weights.iteritems():
-      test = self._get_test_from_test_name(test_name)
-      result = unittest.TestResult()
-      test.run(result)
-      yield test_name, weight, result
+    if self._results:
+      return self._results
+    else:
+      for test_name, weight in self.weights.iteritems():
+        test = self._get_test_from_test_name(test_name)
+        result = unittest.TestResult()
+        test.run(result)
+        self._results.append((test_name, weight, result))
+      return self._results
 
   @property
   def grade(self):
