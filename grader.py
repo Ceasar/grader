@@ -36,11 +36,9 @@ class Problem(object):
   def print_results(self):
     """Print the results of the tests and the grade for the problem."""
     print "Grading %s..." % self._test_case
-    total = 0
     for test_name, weight, result in self.results:
       print "Running %s..." % test_name
       if result.wasSuccessful():
-        total += weight
         print "Points: %d/%d" % (weight, weight)
       else:
         print "-" * 70
@@ -55,9 +53,7 @@ class Problem(object):
           pass
         print "Points: 0/%d" % weight
         print "-" * 70
-    print "Total: %d/%d" % (total, self.max_grade)
     print "=" * 70
-    return total, self.max_grade
 
 
 class Grader(object):
@@ -70,7 +66,7 @@ class Grader(object):
     print "=" * 70
     total, max_pt = 0, 0
     for problem in self.problems:
-      prob_total, prob_max_pt = problem.print_results()
-      total += prob_total
-      max_pt += prob_max_pt
+      total += problem.grade
+      max_pt += problem.max_grade
+      problem.print_results()
     print "Final Grade: %d/%d" % (total, max_pt)
