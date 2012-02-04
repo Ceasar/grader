@@ -36,11 +36,11 @@ class TestSequenceFunctions(unittest.TestCase):
 
 if __name__ == "__main__":
     from grader import Problem, Grader
-    problem1 = Problem(TestSequenceFunctions, {
-      'test_shuffle': 4,
-      'test_choice': 2,
-      'test_sample': 4,
-      'test_sleep': 5,
-      })
+    problem1 = Problem(TestSequenceFunctions, [
+      ('test_shuffle', 4),
+      ('test_choice', 2),
+      ('test_sample', 4),
+      ('test_sleep', 5),
+      ])
     grader = Grader([problem1])
     grader.print_results()

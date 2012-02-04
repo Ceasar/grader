@@ -3,16 +3,16 @@ import unittest
 
 class Problem(object):
   """A Problem that can be graded."""
-  def __init__(self, test_case, weights):
-    assert all(test_name in test_case.__dict__ for test_name in weights)
-    assert all(weight > 0 for weight in weights.values())
-    self.weights = weights  # test_name -> weight
+  def __init__(self, test_case, test_weights):
+    assert all(test in test_case.__dict__ for test, _ in test_weights)
+    assert all(weight > 0 for _, weight in test_weights)
+    self.test_weights = test_weights
     self._test_case = test_case
     self._results = {}  # test_name -> result
 
   @property
   def max_grade(self):
-    return sum(self.weights.values())
+    return sum(weight for _, weight in self.test_weights)
 
   def _get_test_from_test_name(self, test_name):
     return self._test_case(test_name)
@@ -29,13 +29,13 @@ class Problem(object):
 
   @property
   def grade(self):
-    return sum(weight for test_name, weight in self.weights.iteritems() \
-        if self.result(test_name).wasSuccessful())
+    return sum(weight for test, weight in self.test_weights \
+        if self.result(test).wasSuccessful())
 
   def print_results(self):
     """Print the results of the tests and the grade for the problem."""
     print "Grading %s..." % self._test_case
-    for test_name, weight in self.weights.iteritems():
+    for test_name, weight in self.test_weights:
       print "Running %s..." % test_name
       result = self.result(test_name)
       if result.wasSuccessful():
