@@ -26,81 +26,30 @@ Then, at the bottom of your file, replace unittest.main() with something like
 the following:
 
     if __name__ == "__main__":
-      from grader import Problem, Grader
-      problem1 = Problem(SortedListTestCase, {
-        'test_append': 5,
-        'test_extend': 5,
-        'test_setitem': 5
-        })
-      problem2 = Problem(InvertDictTestCase, {
-        'test_new_keys_are_old_values': 5,
-        'test_new_values_are_old_keys': 5,
-        'test_new_keys_are_old_values2': 5,
-        'test_new_values_are_old_keys2': 5
-        })
-      problem3 = Problem(ConcordanceTestCase, {
-        'test_bad_input': 5,
-        'test_bad_lookup1': 5,
-        'test_bad_lookup2': 5,
-        'test_bad_lookup3': 5,
-        'test_lookup1': 5,
-        'test_lookup2': 5,
-        'test_lookup3': 5,
-        'test_lookup4': 5,
-        'test_lookup5': 10,
-        'test_lookup6': 5,
-        'test_lookup7': 10
-        })
-      grader = Grader([problem1, problem2, problem3])
-      grader.print_results()
+        # unittest.main()
+        from grader import Problem, Grader
+        problem1 = Problem(TestSequenceFunctions, {
+          'test_shuffle': 4,
+          'test_choice': 2,
+          'test_sample': 4,
+          'test_sleep': 5,
+          })
+        grader = Grader([problem1])
+        grader.print_results()
 
 Running the code above in my project outputs the following text:
 
-    02:11:12 ~/hw1$ python tests.py
+    19:53:53 ~/grader$ python tests.py ======================================================================Grading <class '__main__.TestSequenceFunctions'>...
+    Running test_shuffle...
+    Points: 4/4
+    Running test_choice...
+    Points: 2/2
+    Running test_sleep...
+    Points: 5/5
+    Running test_sample...
+    Points: 4/4
     ======================================================================
-    Grading <class '__main__.SortedListTestCase'>...
-    Running test_extend...
-    Points: 5/5
-    Running test_append...
-    Points: 5/5
-    Running test_setitem...
-    Points: 5/5
-    ======================================================================
-    Grading <class '__main__.InvertDictTestCase'>...
-    Running test_new_keys_are_old_values...
-    Points: 5/5
-    Running test_new_values_are_old_keys...
-    Points: 5/5
-    Running test_new_keys_are_old_values2...
-    Points: 5/5
-    Running test_new_values_are_old_keys2...
-    Points: 5/5
-    ======================================================================
-    Grading <class '__main__.ConcordanceTestCase'>...
-    Running test_bad_lookup3...
-    Points: 5/5
-    Running test_bad_lookup2...
-    Points: 5/5
-    Running test_bad_lookup1...
-    Points: 5/5
-    Running test_bad_input...
-    Points: 5/5
-    Running test_lookup3...
-    Points: 5/5
-    Running test_lookup2...
-    Points: 5/5
-    Running test_lookup1...
-    Points: 5/5
-    Running test_lookup7...
-    Points: 10/10
-    Running test_lookup6...
-    Points: 5/5
-    Running test_lookup5...
-    Points: 10/10
-    Running test_lookup4...
-    Points: 5/5
-    ======================================================================
-    Final Grade: 100/100
+    Final Grade: 15/15
 
 Changing the look of the output
 -------------------------------
