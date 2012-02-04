@@ -6,9 +6,9 @@ class Problem(object):
   def __init__(self, test_case, weights):
     assert all(test_name in test_case.__dict__ for test_name in weights)
     assert all(weight > 0 for weight in weights.values())
+    self.weights = weights  # test_name -> weight
     self._test_case = test_case
-    self.weights = weights  # test_name -> weight map
-    self._results = []
+    self._results = {}  # test_name -> result
 
   @property
   def max_grade(self):
@@ -19,17 +19,18 @@ class Problem(object):
     if self._results:
       return self._results
     else:
-      for test_name, weight in self.weights.iteritems():
+      for test_name, _ in self.weights.iteritems():
         test = self._get_test_from_test_name(test_name)
         result = unittest.TestResult()
         test.run(result)
-        self._results.append((test_name, weight, result))
+        self._results[test_name] = result
       return self._results
 
   @property
   def grade(self):
     final_score = 0
-    for _, weight, result in self.results:
+    for test_name, weight in self.weights.iteritems():
+      result = self.results[test_name]
       if result.wasSuccessful():
         final_score += weight
     return final_score
@@ -40,8 +41,9 @@ class Problem(object):
   def print_results(self):
     """Print the results of the tests and the grade for the problem."""
     print "Grading %s..." % self._test_case
-    for test_name, weight, result in self.results:
+    for test_name, weight in self.weights.iteritems():
       print "Running %s..." % test_name
+      result = self.results[test_name]
       if result.wasSuccessful():
         print "Points: %d/%d" % (weight, weight)
       else:
