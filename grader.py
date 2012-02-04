@@ -37,6 +37,9 @@ class Problem(object):
     print "Grading %s..." % self._test_case
     for test_name, weight in self.test_weights:
       print "Running %s..." % test_name
+      test = self._get_test_from_test_name(test_name)
+      if test._testMethodDoc:
+        print test._testMethodDoc
       result = self.result(test_name)
       if result.wasSuccessful():
         print "Points: %d/%d" % (weight, weight)

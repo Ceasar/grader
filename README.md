@@ -38,19 +38,25 @@ the following:
 
 Running the code above in my project outputs the following text:
 
-    19:53:53 ~/grader$ python tests.py
+    20:31:36 ~/grader$ python tests.py 
     ======================================================================
     Grading <class '__main__.TestSequenceFunctions'>...
     Running test_shuffle...
+    Make sure the shuffled sequence does not lose any elements
     Points: 4/4
     Running test_choice...
+    Make sure random.choice picks an element in a given sequence.
     Points: 2/2
-    Running test_sleep...
-    Points: 5/5
     Running test_sample...
+    Make sure random.sample picks items only from the given sequence.
     Points: 4/4
+    Running test_sleep...
+    Make sure to print the name of a test before it starts running.
+    Points: 5/5
+    Running test_no_docstring...
+    Points: 5/5
     ======================================================================
-    Final Grade: 15/15
+    Final Grade: 20/20
 
 Changing the look of the output
 -------------------------------
