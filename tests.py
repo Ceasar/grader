@@ -1,10 +1,13 @@
+"""Sample test cases for grader module."""
+
 import time
 import random
 import unittest
 
 class TestSequenceFunctions(unittest.TestCase):
+    """Sample test case that validates sequence functions."""
 
-    def setUp(self):
+    def setUp(self): #pylint:disable=C0103
         self.seq = range(10)
 
     def test_shuffle(self):
@@ -14,7 +17,7 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(self.seq, range(10))
 
         # should raise an exception for an immutable sequence
-        self.assertRaises(TypeError, random.shuffle, (1,2,3))
+        self.assertRaises(TypeError, random.shuffle, (1, 2, 3))
 
     def test_choice(self):
         """Make sure random.choice picks an element in a given sequence."""
@@ -33,23 +36,28 @@ class TestSequenceFunctions(unittest.TestCase):
         time.sleep(3)
         self.assertTrue(True)
 
-    def test_no_docstring(self):
+    def test_no_docstring(self): #pylint:disable=C0111
         # no docstring should be printed
         self.assertTrue(True)
 
     def test_unused(self):
-        # this test should never be run
+        """This test should never be run as it is not added to the problem."""
         self.assertTrue(True)
 
 
-if __name__ == "__main__":
+def test():
+    """Run the sample tests as a grader problem."""
     from grader import Problem, Grader
     problem1 = Problem(TestSequenceFunctions, [
-      ('test_shuffle', 4),
-      ('test_choice', 2),
-      ('test_sample', 4),
-      ('test_sleep', 5),
-      ('test_no_docstring', 5),
-      ])
+        ('test_shuffle', 4),
+        ('test_choice', 2),
+        ('test_sample', 4),
+        ('test_sleep', 5),
+        ('test_no_docstring', 5),
+        ])
     grader = Grader([problem1])
     grader.print_results()
+
+
+if __name__ == "__main__":
+    test()
