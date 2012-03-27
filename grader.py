@@ -1,15 +1,25 @@
 """Grading system based on unittest test cases."""
 
+import threading
 import unittest
 
 
 class Problem(object):
-    """A Problem that can be graded."""
-    
-    def __init__(self, test_case, test_weights):
+    """A Problem that can be graded.
+
+    test_case should be an instance of unittest.TestCase
+
+    test_weights should be a list of test_name-weight pairs.
+
+    timeout should be the time to wait before killing a test, specified in
+    seconds. By default, timeout is None and the test will wait until
+    completion."""
+
+    def __init__(self, test_case, test_weights, timeout=None):
         assert all(test in test_case.__dict__ for test, _ in test_weights)
         assert all(weight > 0 for _, weight in test_weights)
         self.test_weights = test_weights
+        self.timeout = timeout
         self._test_case = test_case
         self._results = {}    # test_name -> result
 
@@ -29,7 +39,15 @@ class Problem(object):
         except KeyError:
             test = self._get_test_from_test_name(test_name)
             result = unittest.TestResult()
-            test.run(result)
+            test_runner = threading.Thread(target=test.run, args=(result,))
+            test_runner.start()
+
+            test_runner.join(self.timeout)
+
+            # if the test is still running, report a failure
+            if test_runner.isAlive():
+                result.addFailure(test, (RuntimeError, "Time out", ""))
+
             self._results[test_name] = result
             return result
 
