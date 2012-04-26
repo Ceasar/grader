@@ -40,6 +40,7 @@ class Problem(object):
             test = self._get_test_from_test_name(test_name)
             result = unittest.TestResult()
             test_runner = threading.Thread(target=test.run, args=(result,))
+            test_runner.daemon = True
             test_runner.start()
 
             test_runner.join(self.timeout)

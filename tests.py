@@ -39,7 +39,7 @@ class TestSequenceFunctions(unittest.TestCase):
 
     def test_timeout(self):
         """Make sure tests that take too long fail."""
-        time.sleep(5)
+        time.sleep(10)
         self.assertTrue(True)
 
     def test_no_docstring(self):  # pylint:disable=C0111
@@ -59,8 +59,8 @@ def test():
         ('test_choice', 2),
         ('test_sample', 4),
         ('test_sleep', 5),
-        ('test_timeout', 5),
         ('test_no_docstring', 5),
+        ('test_timeout', 5),
         ], timeout=3)
     grader = Grader([problem1])
     grader.print_results()
